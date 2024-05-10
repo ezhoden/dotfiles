@@ -68,6 +68,15 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    config = true
+  },
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -298,7 +307,7 @@ vim.o.termguicolors = true
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Explorer keymap
-vim.keymap.set("n", "<leader>qw", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>qq", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Save keymaps
 vim.keymap.set('n', '<leader>ww', vim.cmd.w, { desc = "[W]rite current file" })
@@ -480,10 +489,15 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- git-fugitive binding
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+-- Git binding
+local neogit = require('neogit')
 
--- gitsigns setup and hotkeys
+vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+
+vim.keymap.set("n", "<leader>gc", ":Neogit commit<CR>")
+
+vim.keymap.set("n", "<leader>gp", ":G pull origin<CR>")
+
 require('gitsigns').setup({
   current_line_blame = true
 })
