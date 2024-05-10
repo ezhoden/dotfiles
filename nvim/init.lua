@@ -82,7 +82,7 @@ require('lazy').setup({
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
-      }
+    }
   },
 
   -- Detect tabstop and shiftwidth automatically
@@ -117,7 +117,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',          opts = {} },
+  { 'folke/which-key.nvim',                opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -140,7 +140,7 @@ require('lazy').setup({
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',         opts = {} },
+  { 'numToStr/Comment.nvim',               opts = {} },
 
   {
     'stevearc/oil.nvim',
@@ -378,23 +378,23 @@ require('telescope').setup {
     preview = {
       mime_hook = function(filepath, bufnr, opts)
         local is_image = function(filepath)
-          local image_extensions = {'png','jpg'}   -- Supported image formats
-          local split_path = vim.split(filepath:lower(), '.', {plain=true})
+          local image_extensions = { 'png', 'jpg' } -- Supported image formats
+          local split_path = vim.split(filepath:lower(), '.', { plain = true })
           local extension = split_path[#split_path]
           return vim.tbl_contains(image_extensions, extension)
         end
         if is_image(filepath) then
           local term = vim.api.nvim_open_term(bufnr, {})
-          local function send_output(_, data, _ )
+          local function send_output(_, data, _)
             for _, d in ipairs(data) do
-              vim.api.nvim_chan_send(term, d..'\r\n')
+              vim.api.nvim_chan_send(term, d .. '\r\n')
             end
           end
           vim.fn.jobstart(
             {
-              'chafa', filepath  -- Terminal image viewer command
-            }, 
-            {on_stdout=send_output, stdout_buffered=true, pty=true})
+              'chafa', filepath -- Terminal image viewer command
+            },
+            { on_stdout = send_output, stdout_buffered = true, pty = true })
         else
           require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
         end
@@ -497,9 +497,20 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Git binding
-vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+vim.keymap.set("n", "<leader>gg", function()
+  if vim.fn.buflisted(vim.fn.bufname('fugitive:///*/.git//$')) ~= 0 then
+    vim.cmd [[ execute ":bdelete" bufname('fugitive:///*/.git//$') ]]
+  else
+    vim.cmd.Git()
+  end
+end)
 
-vim.keymap.set("n", "<leader>gc", function ()
+vim.keymap.set("n", "<leader>ga", function ()
+  vim.cmd(":G add .")
+  require('notify')("All changes have been staged")
+end)
+
+vim.keymap.set("n", "<leader>gc", function()
   vim.ui.input({ prompt = 'Commit message: ' }, function(commit_message)
     vim.cmd(':G commit -m "' .. commit_message .. '"')
   end)
