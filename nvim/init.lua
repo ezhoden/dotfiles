@@ -68,14 +68,21 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+
   {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
-      "nvim-telescope/telescope.nvim", -- optional
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
     },
-    config = true
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+      }
   },
 
   -- Detect tabstop and shiftwidth automatically
@@ -490,13 +497,15 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Git binding
-local neogit = require('neogit')
-
 vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
 
-vim.keymap.set("n", "<leader>gc", ":Neogit commit<CR>")
+vim.keymap.set("n", "<leader>gc", function ()
+  vim.ui.input({ prompt = 'Commit message: ' }, function(commit_message)
+    vim.cmd(':G commit -m "' .. commit_message .. '"')
+  end)
+end)
 
-vim.keymap.set("n", "<leader>gp", ":G pull origin<CR>")
+vim.keymap.set("n", "<leader>gp", ":G pull origin<CR>", { silent = true })
 
 require('gitsigns').setup({
   current_line_blame = true
