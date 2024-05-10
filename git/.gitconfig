@@ -1,0 +1,5 @@
+[user]
+	name = Denis Ezhov
+	email = ezhoden@mail.ru
+[push]
+	autoSetupRemote = true
