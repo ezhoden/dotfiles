@@ -66,9 +66,9 @@
     },
     "clock#time": {
         "interval": 1,
-        "format": "{:%H:%m}",
-        "tooltip-format": "{:%H:%m:%S}",
-        "format-alt": "{:%H:%m:%S}"
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%H:%M:%S}",
+        "format-alt": "{:%H:%M:%S}"
     },
     "cpu": {
         "interval": 1,
