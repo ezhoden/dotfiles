@@ -3,6 +3,7 @@
 dotfiles="$HOME/dotfiles"
 
 configs=(
+	anyrun
 	hypr
 	kitty
 	mako

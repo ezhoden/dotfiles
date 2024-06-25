@@ -1,0 +1,45 @@
+@import "./rose-pine.css";
+
+* {
+    all: unset;
+    font-family: "JetBrainsMonoNL Nerd Font Mono", sans-serif;
+    font-size: 16px;
+    color: @text;
+}
+
+#entry {
+    background-color: @base;
+    border: 1px solid @love;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 8px;
+}
+
+#window {
+}
+
+#main {
+}
+
+#plugin {
+}
+
+#match {
+    border-radius: 16px;
+    padding: 4px;
+    background: @base;
+}
+
+#match + #match {
+    margin-top: 8px;
+}
+
+#match-title {
+}
+
+#match-desc {
+}
+
+#match:selected {
+    border: 1px solid @love;
+}
