@@ -5,6 +5,7 @@ dotfiles="$HOME/dotfiles"
 configs=(
 	hypr
 	kitty
+	mako
 	nvim
 	waybar
 )
