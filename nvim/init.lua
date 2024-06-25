@@ -133,7 +133,7 @@ require('lazy').setup({
     },
   },
 
-  'navarasu/onedark.nvim',
+  { "rose-pine/neovim", name = "rose-pine" },
 
   'nvim-lualine/lualine.nvim',
 
@@ -242,28 +242,20 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
-require('onedark').setup({
-  transparent = true,
-  lualine = {
-    transparent = true,
-  },
+require("rose-pine").setup({
+    variant = "moon", -- auto, main, moon, or dawn
+    dark_variant = "moon", -- main, moon, or dawn
+
+    enable = {
+        terminal = true,
+    },
+
+    styles = {
+        transparency = true,
+    },
 })
 
-require('onedark').load()
-
-local custom_lualine_theme = require('lualine.themes.onedark')
-
-custom_lualine_theme.normal.b.bg = 'None'
-custom_lualine_theme.normal.c.bg = 'None'
-
-require('lualine').setup({
-  options = {
-    icons_enabled = true,
-    theme = custom_lualine_theme,
-    component_separators = '|',
-    section_separators = '',
-  }
-})
+vim.cmd("colorscheme rose-pine-moon")
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
