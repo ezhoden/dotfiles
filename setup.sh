@@ -3,15 +3,16 @@
 dotfiles="$HOME/dotfiles"
 
 configs=(
-	anyrun
+	# anyrun
 	hypr
 	kitty
-	mako
+	# mako
 	nvim
 	waybar
 )
 
 files=(
+	.gitconfig
 	.zprofile
 	.zshrc
 )
